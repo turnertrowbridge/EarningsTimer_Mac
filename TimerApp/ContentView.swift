@@ -8,32 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var timerValue = 0
     @State private var timerRunning = false
-    @State private var timerText = "00:00"
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
+        
+        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
         VStack {
-            Text(timerText)
+            Text(formatTime(seconds: timerValue))
                 .font(.largeTitle)
-                .padding()
             
             Button(action: {
                 timerRunning.toggle()
             }) {
                 Text(timerRunning ? "Stop" : "Start")
             }
-            .padding()
         }
-        .onReceive(timer, perform: { _ in
+        .padding()
+        .frame(width:150, height: 100)
+        .onReceive(timer) { _ in
             if timerRunning {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "mm:ss"
-                timerText = dateFormatter.string(from: Date())
+                timerValue += 1
             }
-        })
+        }
         
     }
+    
+    func formatTime(seconds: Int) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        
+        return formatter.string(from: TimeInterval(seconds))!
+    }
+
 }
 
 #Preview {
