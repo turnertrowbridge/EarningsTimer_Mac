@@ -13,15 +13,37 @@ struct ContentView: View {
     @State private var timerRunning = false
     @State private var laps: [Int] = []
     @State private var showingResetAlert = false
+    @State private var showingOptions = false
+    @State private var trackMoneyMode = false
+    @State private var dollarsPerHour: Double = 0.0
+    @State private var totalEarnings: Double = 0.0
+    @State private var lapEarnings: [Double] = []
     
     var body: some View {
         
         let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         
+        
+        
         VStack {
+            // Options button
+            HStack {
+                Spacer()
+                Button(action: {
+                    showingOptions = true
+                }) {
+                    Text("Options")
+                }
+            }
+            
             // Display time
             Text(formatTime(seconds: timerValue))
                 .font(.largeTitle)
+            
+            // Money mode, display total earning
+            if trackMoneyMode {
+                Text("Total Earnings: $\(String(format: "%.2f", totalEarnings))")
+            }
             
             // Start/Stop Button
             Button(action: {
@@ -36,6 +58,7 @@ struct ContentView: View {
                 if timerRunning {
                     laps.append(lapValue)
                     lapValue = 0
+                    lapEarnings.append(calculateLapEarnings())
                 }
             }) {
                 Text("Lap")
@@ -47,6 +70,9 @@ struct ContentView: View {
                     HStack {
                         Text("Lap \(index + 1):")
                         Text(formatTime(seconds: laps[index]))
+                        if trackMoneyMode {
+                            Text("\(String(format: "$%.2f", lapEarnings[index]))")
+                        }
                     }
                 }
             }
@@ -70,12 +96,25 @@ struct ContentView: View {
             if timerRunning {
                 timerValue += 1
                 lapValue += 1
+                if trackMoneyMode {
+                    totalEarnings = calculateTotalEarnings()
+                }
             }
         }
+        .sheet(isPresented: $showingOptions) {
+            OptionsView(trackMoneyMode: $trackMoneyMode, dollarsPerHour: $dollarsPerHour)
+        }
         
-
+        
     }
     
+    func calculateTotalEarnings() -> Double {
+           return Double(timerValue) / 3600 * dollarsPerHour
+       }
+    
+    func calculateLapEarnings() -> Double {
+        return Double(lapValue) / 3600 * dollarsPerHour
+    }
     
     func formatTime(seconds: Int) -> String {
         let formatter = DateComponentsFormatter()
@@ -86,6 +125,49 @@ struct ContentView: View {
         return formatter.string(from: TimeInterval(seconds))!
     }
     
+}
+
+struct OptionsView: View {
+    @Binding var trackMoneyMode: Bool
+    @Binding var dollarsPerHour: Double
+    @State private var tempTrackMoneyMode: Bool
+    @State private var tempDollarsPerHour: Double
+    @Environment(\.presentationMode) var presentationMode
+
+    init(trackMoneyMode: Binding<Bool>, dollarsPerHour: Binding<Double>) {
+        _trackMoneyMode = trackMoneyMode
+        _dollarsPerHour = dollarsPerHour
+        _tempTrackMoneyMode = State(initialValue: trackMoneyMode.wrappedValue)
+        _tempDollarsPerHour = State(initialValue: dollarsPerHour.wrappedValue)
+    }
+
+    var body: some View {
+        VStack {
+            Toggle(isOn: $tempTrackMoneyMode) {
+                Text("Track Money Mode")
+            }
+            if trackMoneyMode {
+                TextField("Dollars per hour", value: $tempDollarsPerHour, formatter: NumberFormatter())
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            HStack {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Cancel")
+                }
+                Spacer()
+                Button(action: {
+                    trackMoneyMode = tempTrackMoneyMode
+                    dollarsPerHour = tempDollarsPerHour
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Submit")
+                }
+            }
+        }
+        .frame(width: 200, height: 150)
+    }
 }
 
 #Preview {
