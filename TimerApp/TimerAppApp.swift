@@ -34,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         popover = NSPopover()
+        popover?.behavior = .transient
         popover?.contentViewController = NSViewController()
         popover?.contentViewController?.view = NSHostingView(rootView: ContentView())
     }

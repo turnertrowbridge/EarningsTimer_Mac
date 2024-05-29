@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		7B305CB92C06958700727BA5 /* TimerAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B305CB82C06958700727BA5 /* TimerAppApp.swift */; };
 		7B305CBB2C06958700727BA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B305CBA2C06958700727BA5 /* ContentView.swift */; };
-		7B305CBD2C06958800727BA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B305CBC2C06958800727BA5 /* Assets.xcassets */; };
 		7B305CC02C06958800727BA5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B305CBF2C06958800727BA5 /* Preview Assets.xcassets */; };
 		7B305CCB2C06958800727BA5 /* TimerAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B305CCA2C06958800727BA5 /* TimerAppTests.swift */; };
 		7B305CD52C06958900727BA5 /* TimerAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B305CD42C06958900727BA5 /* TimerAppUITests.swift */; };
 		7B305CD72C06958900727BA5 /* TimerAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B305CD62C06958900727BA5 /* TimerAppUITestsLaunchTests.swift */; };
+		7B3B1C2D2C07CBB9003F848A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B3B1C2C2C07CBB9003F848A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,6 @@
 		7B305CB52C06958700727BA5 /* TimerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B305CB82C06958700727BA5 /* TimerAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerAppApp.swift; sourceTree = "<group>"; };
 		7B305CBA2C06958700727BA5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		7B305CBC2C06958800727BA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B305CBF2C06958800727BA5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7B305CC12C06958800727BA5 /* TimerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimerApp.entitlements; sourceTree = "<group>"; };
 		7B305CC62C06958800727BA5 /* TimerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +44,7 @@
 		7B305CD02C06958900727BA5 /* TimerAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B305CD42C06958900727BA5 /* TimerAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerAppUITests.swift; sourceTree = "<group>"; };
 		7B305CD62C06958900727BA5 /* TimerAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7B3B1C2C2C07CBB9003F848A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +97,7 @@
 			children = (
 				7B305CB82C06958700727BA5 /* TimerAppApp.swift */,
 				7B305CBA2C06958700727BA5 /* ContentView.swift */,
-				7B305CBC2C06958800727BA5 /* Assets.xcassets */,
+				7B3B1C2C2C07CBB9003F848A /* Assets.xcassets */,
 				7B305CC12C06958800727BA5 /* TimerApp.entitlements */,
 				7B305CBE2C06958800727BA5 /* Preview Content */,
 			);
@@ -234,7 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B305CC02C06958800727BA5 /* Preview Assets.xcassets in Resources */,
-				7B305CBD2C06958800727BA5 /* Assets.xcassets in Resources */,
+				7B3B1C2D2C07CBB9003F848A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +428,7 @@
 				DEVELOPMENT_TEAM = Z58JDZM769;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -455,6 +456,7 @@
 				DEVELOPMENT_TEAM = Z58JDZM769;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
