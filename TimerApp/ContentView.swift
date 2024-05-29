@@ -149,9 +149,11 @@ struct OptionsView: View {
             }
             
             HStack{
+                Spacer()
                 Text("$")
                 TextField("Dollars per hour", value: $tempDollarsPerHour, formatter: NumberFormatter())
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                Spacer()
             }
 
             HStack {
