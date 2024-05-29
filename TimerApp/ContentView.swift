@@ -141,15 +141,19 @@ struct OptionsView: View {
         _tempDollarsPerHour = State(initialValue: dollarsPerHour.wrappedValue)
     }
 
+    
     var body: some View {
         VStack {
             Toggle(isOn: $tempTrackMoneyMode) {
                 Text("Track Money Mode")
             }
-            if trackMoneyMode {
+            
+            HStack{
+                Text("$")
                 TextField("Dollars per hour", value: $tempDollarsPerHour, formatter: NumberFormatter())
                     .textFieldStyle(RoundedBorderTextFieldStyle())
             }
+
             HStack {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
@@ -169,6 +173,8 @@ struct OptionsView: View {
         .frame(width: 200, height: 150)
     }
 }
+
+
 
 #Preview {
     ContentView()
