@@ -23,8 +23,6 @@ struct ContentView: View {
         
         let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         
-        
-        
         VStack {
             // Options button
             HStack {
@@ -49,7 +47,13 @@ struct ContentView: View {
             Button(action: {
                 timerRunning.toggle()
             }) {
-                Text(timerRunning ? "Stop" : "Start")
+                if timerValue == 0 {
+                    Text(timerRunning ? "Pause" : "Start")
+                }
+                else {
+                    Text(timerRunning ? "Pause" : "Resume")
+                }
+                
                 
             }
             
@@ -57,8 +61,8 @@ struct ContentView: View {
             Button(action: {
                 if timerRunning {
                     laps.append(lapValue)
-                    lapValue = 0
                     lapEarnings.append(calculateLapEarnings())
+                    lapValue = 0
                 }
             }) {
                 Text("Lap")
@@ -91,7 +95,7 @@ struct ContentView: View {
             }
         }
         .padding()
-        .frame(width:200, height:300)
+        .frame(width:250, height:300)
         .onReceive(timer) { _ in
             if timerRunning {
                 timerValue += 1
@@ -102,7 +106,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingOptions) {
-            OptionsView(trackMoneyMode: $trackMoneyMode, dollarsPerHour: $dollarsPerHour)
+            OptionsView(trackMoneyMode: $trackMoneyMode, dollarsPerHour: $dollarsPerHour, laps: $laps, lapEarnings: $lapEarnings)
         }
         
         
@@ -130,13 +134,17 @@ struct ContentView: View {
 struct OptionsView: View {
     @Binding var trackMoneyMode: Bool
     @Binding var dollarsPerHour: Double
+    @Binding var laps: [Int]
+    @Binding var lapEarnings: [Double]
     @State private var tempTrackMoneyMode: Bool
     @State private var tempDollarsPerHour: Double
     @Environment(\.presentationMode) var presentationMode
 
-    init(trackMoneyMode: Binding<Bool>, dollarsPerHour: Binding<Double>) {
+    init(trackMoneyMode: Binding<Bool>, dollarsPerHour: Binding<Double>, laps: Binding<[Int]>, lapEarnings: Binding<[Double]>) {
         _trackMoneyMode = trackMoneyMode
         _dollarsPerHour = dollarsPerHour
+        _laps = laps
+        _lapEarnings = lapEarnings
         _tempTrackMoneyMode = State(initialValue: trackMoneyMode.wrappedValue)
         _tempDollarsPerHour = State(initialValue: dollarsPerHour.wrappedValue)
     }
@@ -153,19 +161,29 @@ struct OptionsView: View {
                 Text("$")
                 TextField("Dollars per hour", value: $tempDollarsPerHour, formatter: NumberFormatter())
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                Text("per hour")
                 Spacer()
             }
 
             HStack {
+                // Cancel Button
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Cancel")
                 }
+                
                 Spacer()
+                
+                // Submit Button
                 Button(action: {
                     trackMoneyMode = tempTrackMoneyMode
                     dollarsPerHour = tempDollarsPerHour
+                    if !tempTrackMoneyMode {
+                        lapEarnings = []
+                    } else {
+                        lapEarnings = laps.map { Double($0) / 3600 * dollarsPerHour }
+                    }
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Submit")
