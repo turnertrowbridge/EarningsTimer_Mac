@@ -152,6 +152,17 @@ struct OptionsView: View {
     
     var body: some View {
         VStack {
+            // Quit App Button
+            HStack {
+                Spacer()
+                Button(action: {
+                    NSApplication.shared.terminate(self)
+                }) {
+                    Text("Quit App")
+                        .foregroundColor(.red)
+                }
+            }
+            
             Toggle(isOn: $tempTrackMoneyMode) {
                 Text("Track Money Mode")
             }
