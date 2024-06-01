@@ -91,6 +91,8 @@ struct ContentView: View {
                     timerRunning = false
                     timerValue = 0
                     laps = []
+                    lapEarnings = []
+                    totalEarnings = 0
                 }, secondaryButton: .cancel())
             }
         }
@@ -156,7 +158,7 @@ struct OptionsView: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    NSApplication.shared.terminate(self)
+                    exit(0)
                 }) {
                     Text("Quit App")
                         .foregroundColor(.red)
